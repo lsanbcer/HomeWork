@@ -23,3 +23,6 @@ Route::post('login', 'UserController@login');
 
 Route::middleware('auth:api')->get('user', 'UserController@index');
 Route::middleware('auth:api')->get('logout', 'UserController@logout');
+
+// 串接 Ubike API
+Route::get('UbikeSearch', 'UbikeApiController@search_sna');
