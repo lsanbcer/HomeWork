@@ -23,10 +23,10 @@ class UserController extends Controller
 
         $user = User::where('email', $email)->first();
         if (!$user) {
-            return response(['message' => 'Login failed! Please check email.']);
+            return response(['message' => 'Login failed! Please check email.', 401]);
         }
         if (!$user->password == $password) {
-            return response(['message' => 'Login failed! Please check password.']);
+            return response(['message' => 'Login failed! Please check password.', 401]);
         }
         $user->update(['api_token' => $apiToken]);
         return response(['message' => 'Login successfully!',  'api_token' => $apiToken]);
@@ -78,7 +78,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return response(['message' => $validator->errors()]);
+            return response(['message' => $validator->errors()], 400);
         }
 
         $apiToken = Str::random(10);
