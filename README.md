@@ -1,11 +1,11 @@
 # API Docs
 
-| User API                                                |
-| ------------------------------------------------------- |
-| [Login](https://github.com/lsanbcer/Elder#login)        |
-| [Register](https://github.com/lsanbcer/Elder#register)  |
-| [Userinfo](https://github.com/lsanbcer/Elder#userinfo)  |
-| [Logout](https://github.com/lsanbcer/Elder#logout)      |
+| User API                                                | Ubike api                                                          |
+| ------------------------------------------------------- |:------------------------------------------------------------------ |
+| [Login](https://github.com/lsanbcer/Elder#login)        | [Search Sna](https://github.com/lsanbcer/Elder#search-sna)         |
+| [Register](https://github.com/lsanbcer/Elder#register)  | [Search All Sna](https://github.com/lsanbcer/Elder#search-all-sna) |
+| [Userinfo](https://github.com/lsanbcer/Elder#userinfo)  |                                                                    |
+| [Logout](https://github.com/lsanbcer/Elder#logout)      |                                                                    |
 
 ***
 
@@ -187,5 +187,120 @@
 ```json
 {
     "message": "You are logged out!"
+}
+```
+
+***
+
+# Ubike api
+
+# Search Sna
+
+搜尋場站。
+網址後方加上參數`?sna=場站名稱`來搜尋場站。
+
+**URL** : `/api/UbikeSearch?sna=parameters`
+
+**URL Parameters** : 字串，場站名稱。例: ‵西本願寺廣場`。
+
+**Method** : `GET`
+
+## Success Response
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json
+{
+    "data": {
+        "sno": "0275",
+        "sna": "西本願寺廣場",
+        "tot": "58",
+        "sbi": "12",
+        "sarea": "萬華區",
+        "mday": "20210508220221",
+        "lat": "25.040988",
+        "lng": "121.507688",
+        "ar": "中華路一段/長沙街二段路口西南側人行道(西本願寺)(鄰近國軍歷史文物館/中山堂/西門紅樓)",
+        "sareaen": "Wanhua Dist.",
+        "snaen": "Nishi Honganji Square",
+        "aren": "Sec. 1, Zhonghua Rd./Sec. 2, Changsha St. intersection(Southwest)",
+        "bemp": "46",
+        "act": "1"
+    }
+}
+```
+
+# Search All Sna
+
+查詢全部場站資訊。
+網址後方沒有帶參數時，顯示出全部場站資訊。
+
+**URL** : `/api/UbikeSearch/`
+
+**Method** : `GET`
+
+## Success Response
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json
+{
+    "data": {
+        "0001": {
+            "sno": "0001",
+            "sna": "捷運市政府站(3號出口)",
+            "tot": "180",
+            "sbi": "41",
+            "sarea": "信義區",
+            "mday": "20210509191919",
+            "lat": "25.0408578889",
+            "lng": "121.567904444",
+            "ar": "忠孝東路/松仁路(東南側)",
+            "sareaen": "Xinyi Dist.",
+            "snaen": "MRT Taipei City Hall Stataion(Exit 3)-2",
+            "aren": "The S.W. side of Road Zhongxiao East Road & Road Chung Yan.",
+            "bemp": "138",
+            "act": "1"
+        },
+        "0002": {
+            "sno": "0002",
+            "sna": "捷運國父紀念館站(2號出口)",
+            "tot": "48",
+            "sbi": "10",
+            "sarea": "大安區",
+            "mday": "20210509191921",
+            "lat": "25.041254",
+            "lng": "121.55742",
+            "ar": "忠孝東路四段/光復南路口(西南側)",
+            "sareaen": "Daan Dist.",
+            "snaen": "MRT S.Y.S Memorial Hall Stataion(Exit 2.)",
+            "aren": "Sec,4. Zhongxiao E.Rd/GuangFu S. Rd",
+            "bemp": "38",
+            "act": "1"
+        },
+        
+        ...
+        
+        "0405": {
+            "sno": "0405",
+            "sna": "捷運科技大樓站(台北教育大學)",
+            "tot": "66",
+            "sbi": "4",
+            "sarea": "大安區",
+            "mday": "20210509191930",
+            "lat": "25.024685",
+            "lng": "121.544156",
+            "ar": "和平東路二段134號(前方)",
+            "sareaen": "Daan Dist.",
+            "snaen": "MRT Technology Building Station",
+            "aren": "No. 134, Heping E. Rd. (front)",
+            "bemp": "60",
+            "act": "1"
+        }
+    }
 }
 ```
