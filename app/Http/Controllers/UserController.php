@@ -23,10 +23,10 @@ class UserController extends Controller
 
         $user = User::where('email', $email)->first();
         if (!$user) {
-            return response(['message' => 'Login failed! Please check email.', 401]);
+            return response(['message' => 'Login failed! Please check email.'], 400);
         }
         if (!$user->password == $password) {
-            return response(['message' => 'Login failed! Please check password.', 401]);
+            return response(['message' => 'Login failed! Please check password.'], 400);
         }
         $user->update(['api_token' => $apiToken]);
         return response(['message' => 'Login successfully!',  'api_token' => $apiToken]);
