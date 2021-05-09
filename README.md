@@ -1,78 +1,191 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# API Docs
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+| User API                                                |
+| ------------------------------------------------------- |
+| [Login](https://github.com/lsanbcer/Elder#login)        |
+| [Register](https://github.com/lsanbcer/Elder#register)  |
+| [Userinfo](https://github.com/lsanbcer/Elder#userinfo)  |
+| [Logout](https://github.com/lsanbcer/Elder#logout)      |
 
-## About Laravel
+***
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+# User API
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+# Login
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+每次登入成功後產生一組新的token存進資料表，之後在做查看、登出等動作都會驗證這組token來判斷使用者身分。
 
-## Learning Laravel
+**URL** : `/api/login/`
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+**Method** : `POST`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**Auth required** : NO
 
-## Laravel Sponsors
+**Data constraints**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+```json
+{
+    "email": "email",
+    "password": "password"
+}
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
+**Data example**
 
-## Contributing
+```json
+{
+    "email": "abc@gmail.com",
+    "password": "abcd1234"
+}
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Success Response
 
-## Code of Conduct
+**Code** : `200 OK`
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+**Content example**
 
-## Security Vulnerabilities
+```json
+{
+    "message": "Login successfully!",
+    "api_token": "hRqb7XJKcz"
+}
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Error Response
 
-## License
+**Condition** : 如果信箱輸入錯誤。
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**Code** : `400 BAD REQUEST`
+
+**Content example** :
+
+```json
+{
+    "message": "Login failed! Please check email."
+}
+```
+
+# Register
+
+註冊並驗證註冊的資料是否符合，以isAdmin判斷註冊的使用者權限(`1：表示管理者，0：表示一般使用者`)。
+成功註冊後會得到token並存到資料表(以便之後需要驗證)。
+
+**URL** : `/api/register/`
+
+**Method** : `POST`
+
+**Auth required** : NO
+
+**Data constraints**
+
+```json
+{
+    "email": "符合格式的email，唯一性",
+    "password": "長度為6~12之間",
+    "isAdmin": "預設為0",
+    "api_token": "由系統亂數產生，長度為10的字串"
+}
+```
+
+**Data example**
+
+```json
+{
+    "email": "abcde@gmail.com",
+    "password": "abcd1234",
+    "isAdmin": "0",
+    "api_token": "BSoFh97Uc7"
+}
+```
+
+## Success Response
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json
+{
+    "message": "Register as a user.",
+    "data": {
+        "id": 3,
+        "email": "abcde@gmail.com",
+        "password": "abcd1234",
+        "isAdmin": "0",
+        "api_token": "BSoFh97Uc7",
+        "updated_at": "2021-05-09 04:12:35",
+        "created_at": "2021-05-09 04:12:35",
+    }
+}
+```
+
+## Error Response
+
+**Condition** : 如果email已經被註冊過。
+
+**Code** : `400 BAD REQUEST`
+
+**Content example** :
+
+```json
+{
+    "message": {
+        "email": [
+            "The email has already been taken."
+        ]
+    }
+}
+```
+
+# Userinfo
+
+查看會員資料。
+如果是管理者，回傳所有會員資料；一般使用者則回傳自己的資料。
+
+**URL** : `/api/user/`
+
+**Method** : `GET`
+
+**Auth required** : YES
+
+**Authorization** : Bearer Token
+
+## Success Response
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json
+{
+    "data": {
+        "mail": "abcde@gmail.com",
+        "password": "abcd1234"
+    }
+}
+```
+
+# Logout
+
+使用者登出，登出後將登入時產生的token從資料表中清除，該欄位的值會填入`logged out`字串代表使用者已登出。
+
+**URL** : `/api/logout/`
+
+**Method** : `GET`
+
+**Auth required** : YES
+
+**Authorization** : Bearer Token
+
+## Success Response
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json
+{
+    "message": "You are logged out!"
+}
+```
