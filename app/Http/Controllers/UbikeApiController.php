@@ -23,7 +23,7 @@ class UbikeApiController extends Controller
      */
     public function search_sna(Request $request)
     {
-        $ubike_json = file_get_contents('http://tcgbusfs.blob.core.windows.net/blobyoubike/YouBikeTP.json');
+        $ubike_json = file_get_contents('https://tcgbusfs.blob.core.windows.net/blobyoubike/YouBikeTP.json');
         $json_array = json_decode($ubike_json, TRUE);
         $sna = $request->sna;
         
