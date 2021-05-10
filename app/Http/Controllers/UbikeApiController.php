@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UbikeApiController extends Controller
 {
@@ -23,17 +24,21 @@ class UbikeApiController extends Controller
      */
     public function search_sna(Request $request)
     {
-        $ubike_json = file_get_contents('https://tcgbusfs.blob.core.windows.net/blobyoubike/YouBikeTP.json');
-        $json_array = json_decode($ubike_json, TRUE);
-        $sna = $request->sna;
-        
-        if (isset($request->sna)) {
-            $result = $this->array_search_key($sna, $json_array["retVal"]);
-        } else {
-            $result = $json_array["retVal"];
-        }
+        if (Auth::check()) {
+            $ubike_json = file_get_contents('https://tcgbusfs.blob.core.windows.net/blobyoubike/YouBikeTP.json');
+            $json_array = json_decode($ubike_json, TRUE);
+            $sna = $request->sna;
+            
+            if (isset($request->sna)) {
+                $result = $this->array_search_key($sna, $json_array["retVal"]);
+            } else {
+                $result = $json_array["retVal"];
+            }
 
-        return response(['data' => $result]);
+            return response(['data' => $result]);
+        } else {
+            return response(['message' => 'Please Login.'], 400);
+        }
     }
 
     /**
