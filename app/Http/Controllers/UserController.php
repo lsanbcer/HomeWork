@@ -53,10 +53,8 @@ class UserController extends Controller
     public function index()
     {
         $admins = User::all();
-        $user = [
-            'mail' => Auth::user()->email,
-            'password' => Auth::user()->password,
-        ];
+        $user = User::find(Auth::user()->id);
+
         if (Auth::user()->isAdmin) {
             return response(['data' => $admins]);
         } else {
