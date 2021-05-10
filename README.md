@@ -220,7 +220,7 @@
 
 **URL** : `/api/UbikeSearch?sna=parameters`
 
-**URL Parameters** : 字串，場站名稱。例: ‵西本願寺廣場`。
+**URL Parameters** : 字串，場站名稱。例: `西本願寺廣場`。
 
 **Method** : `GET`
 
