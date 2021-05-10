@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -25,7 +26,7 @@ class UserController extends Controller
         if (!$user) {
             return response(['message' => 'Login failed! Please check email.'], 400);
         }
-        if (!$user->password == $password) {
+        if (!Hash::check($password, $user->password)) {
             return response(['message' => 'Login failed! Please check password.'], 400);
         }
         $user->update(['api_token' => $apiToken]);
@@ -84,7 +85,7 @@ class UserController extends Controller
         $apiToken = Str::random(10);
         $create = User::create([
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => Hash::make($request->password),
             'isAdmin' => $request->isAdmin,
             'api_token' => $apiToken,
         ]);
