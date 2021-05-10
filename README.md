@@ -1,7 +1,7 @@
 # API Docs
 
 | User API                                                   | Ubike api                                                             |
-| ---------------------------------------------------------- |:--------------------------------------------------------------------- |
+|:---------------------------------------------------------- |:--------------------------------------------------------------------- |
 | [Login](https://github.com/lsanbcer/HomeWork#login)        | [Search Sna](https://github.com/lsanbcer/HomeWork#search-sna)         |
 | [Register](https://github.com/lsanbcer/HomeWork#register)  | [Search All Sna](https://github.com/lsanbcer/HomeWork#search-all-sna) |
 | [Userinfo](https://github.com/lsanbcer/HomeWork#userinfo)  |                                                                       |
@@ -197,7 +197,7 @@
 **主要欄位說明** : 
 
 | Key     | 說明             |
-| ------- |:--------------- |
+|:------- |:--------------- |
 | sno     | 站點代號         |
 | sna     | 中文場站名稱     |
 | tot     | 場站總停車格     |
