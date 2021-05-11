@@ -160,8 +160,13 @@
 ```json
 {
     "data": {
-        "mail": "abcde@gmail.com",
-        "password": "abcd1234"
+        "id": 4,
+        "email": "ab@gmail.com",
+        "password": "$2y$10$3rwkoU.xCtvXrwaIbUXV4esGrqOX2MebJqdZaoe41HZFlcG28FFEq",
+        "isAdmin": 0,
+        "api_token": "ulUZa5Ini3",
+        "created_at": "2021-05-10 08:35:14",
+        "updated_at": "2021-05-10 08:44:40"
     }
 }
 ```
