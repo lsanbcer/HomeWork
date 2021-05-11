@@ -41,6 +41,9 @@ class UserController extends Controller
      */
     public function logout()
     {
+        if (!Auth::check()) {
+            return response(['message' => 'Unauthenticated. Please check your Bearer Token.'], 401);
+        }
         Auth::user()->update(['api_token' => 'logged out']);
         return response(['message' => 'You are logged out!']);
     }
@@ -52,6 +55,9 @@ class UserController extends Controller
      */
     public function index()
     {
+        if (!Auth::check()) {
+            return response(['message' => 'Unauthenticated. Please check your Bearer Token.'], 401);
+        }
         $admins = User::all();
         $user = User::find(Auth::user()->id);
 

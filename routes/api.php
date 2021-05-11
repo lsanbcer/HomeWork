@@ -21,8 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('register', 'UserController@register');
 Route::post('login', 'UserController@login');
 
-Route::middleware('auth:api')->get('user', 'UserController@index');
-Route::middleware('auth:api')->get('logout', 'UserController@logout');
+Route::get('user', 'UserController@index');
+Route::get('logout', 'UserController@logout');
 
 // 串接 Ubike API
 Route::get('UbikeSearch', 'UbikeApiController@search_sna');
